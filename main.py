@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+from fbprophet import Prophet
 
 
 def readFileAndFilter(path):
@@ -9,6 +10,8 @@ def readFileAndFilter(path):
                             'JAHR': 'Year', 'MONAT': 'Month', 'WERT': 'Value'})
 
     df['MonthPart'] = df['Month'].apply(lambda x: None if x == 'Summe' else x[-2:])
+
+    df = df[df['MonthPart'].notna()]
 
     df = df[df['Year'] < 2021]
 
@@ -25,7 +28,7 @@ def plotHistoricalGraph(df):
 
     # Plotting
     fig = px.line(melted_data, x='Year', y='Value', color='Category',
-                  title='Yearly Trends in Munich Traffic Accidents by Category (2010-2020)',
+                  title='Yearly Trends in Munich Traffic Accidents by Category (2000-2020)',
                   labels={'Value': 'Number of Accidents', 'Year': 'Year'},
                   markers=True,  # Adding markers to each data point for better visibility
                   hover_data={'Value': ':,.0f'})
@@ -41,7 +44,3 @@ def plotHistoricalGraph(df):
 
     fig.show()
 
-
-data = readFileAndFilter('AccidentData.csv')
-
-plotHistoricalGraph(data)
