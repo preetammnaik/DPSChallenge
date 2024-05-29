@@ -14,7 +14,8 @@ def readFileAndFilter(path):
 
     return df
 
-def plotHistorical(df):
+
+def plotHistoricalGraph(df):
     grouped_data = df.groupby(['Category', 'Year']).sum()['Value'].unstack().reset_index()
     print(grouped_data)
 
@@ -23,10 +24,11 @@ def plotHistorical(df):
     print(melted_data)
 
     # Plotting
-    fig = px.bar(melted_data, x='Year', y='Value', color='Category',
-                 title='Historical Number of Accidents per Category',
-                 labels={'Value': 'Number of Accidents', 'Year': 'Year'},
-                 hover_data={'Value': ':,.0f'})
+    fig = px.line(melted_data, x='Year', y='Value', color='Category',
+                  title='Yearly Trends in Munich Traffic Accidents by Category (2010-2020)',
+                  labels={'Value': 'Number of Accidents', 'Year': 'Year'},
+                  markers=True,  # Adding markers to each data point for better visibility
+                  hover_data={'Value': ':,.0f'})
 
     fig.update_layout(
         barmode='group',
@@ -42,5 +44,4 @@ def plotHistorical(df):
 
 data = readFileAndFilter('AccidentData.csv')
 
-
-plotHistorical(data)
+plotHistoricalGraph(data)
