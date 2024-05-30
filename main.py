@@ -2,6 +2,9 @@ import pandas as pd
 import plotly.express as px
 from prophet import Prophet
 import joblib
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
 
 
 def readFileAndFilter(path):
@@ -15,6 +18,7 @@ def readFileAndFilter(path):
     df['Month'] = df['Month'].astype(int) % 100
     df['Date'] = pd.to_datetime(df['Year'].astype(str) + '-' + df['Month'].astype(str) + '-01')
     return df
+
 
 def plotHistoricalGraph(df):
     grouped_data = df.groupby(['Category', 'Year']).sum()['Value'].unstack().reset_index()
@@ -42,6 +46,7 @@ def plotHistoricalGraph(df):
 
     fig.show()
 
+
 def prepare_data_for_prophet(df):
     df_prophet = df.groupby('Date').sum()['Value'].reset_index()
     print(df_prophet['Date'])
@@ -65,11 +70,33 @@ def predict_accidents_prophet(year, month):
     return int(forecast['yhat'].iloc[0])
 
 
-data = readFileAndFilter('AccidentData.csv')
+# data = readFileAndFilter('AccidentData.csv')
 
-model = trainProphetModel(data)
+# model = trainProphetModel(data)
 
-year = 2020
-month = 3
-predicted_value = predict_accidents_prophet(year, month)
-print(f'Predicted number of accidents for {year}-{month}: {predicted_value}')
+
+@app.route('/predict', methods=['GET'])
+def predict():
+    year_param = request.args.get('year')
+    month_param = request.args.get('month')
+    print("Year parameter:", year_param)
+    print("Month parameter:", month_param)
+
+    year = int(year_param)
+    month = int(month_param)
+    print("Year:", year)
+    print("Month:", month)
+
+    model = joblib.load('prophet_model.pkl')
+
+    predicted_value = predict_accidents_prophet(year, month)
+
+    response = {
+        'prediction': predicted_value
+    }
+
+    return jsonify(response), 200, {'Content-Type': 'application/json'}
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
