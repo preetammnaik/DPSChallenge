@@ -14,13 +14,18 @@ The chart clearly shows the fluctuations in accident counts over the years, with
 In addition to visualizing historical data, this project also includes a machine learning model capable of forecasting future accident trends. Specifically, the model focuses on predicting the number of "Alkoholunfälle" (alcohol-related accidents) of type "insgesamt" (total) for a given year and month.
 The model is deployed as a web service, exposing an endpoint that accepts a POST request with a JSON payload containing the desired year and month. The service then returns a JSON response with the predicted accident count for the specified time period.
 Deployment and Usage
+
 The forecasting model has been deployed to a cloud service, and the source code is available on GitHub. To use the model, send a POST request to the deployed endpoint with a JSON payload in the following format:
+
 {
   "year": 2021,
   "month": 1
 }
+
 The service will respond with a JSON object containing the predicted accident count:
+
 {
   "prediction": 42
 }
+
 Please refer to the repository's documentation for more details on deployment, usage, and implementation specifics.
