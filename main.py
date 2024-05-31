@@ -58,11 +58,15 @@ def trainProphetModel(data):
     df_prophet = prepare_data_for_prophet(data)
     model = Prophet()
     model.fit(df_prophet)
+    # Print statement for debugging
+    print("Saving model to prophet_model.pkl")
     joblib.dump(model, 'prophet_model.pkl')
     return model
 
 
 def predict_accidents_prophet(year, month):
+    # Load the model
+    print("Loading model from prophet_model.pkl")
     model = joblib.load('prophet_model.pkl')
     date = pd.to_datetime(f'{year}-{month:02d}-01')
     future = pd.DataFrame({'ds': [date]})
@@ -70,9 +74,8 @@ def predict_accidents_prophet(year, month):
     return int(forecast['yhat'].iloc[0])
 
 
-# data = readFileAndFilter('AccidentData.csv')
-
-# model = trainProphetModel(data)
+data = readFileAndFilter('AccidentData.csv')
+model = trainProphetModel(data)
 
 
 @app.route('/predict', methods=['GET'])
