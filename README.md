@@ -3,6 +3,10 @@ This repository contains code for analyzing and visualizing historical data on t
 **Data Visualisation**
 The central component of this project is a line chart that illustrates the yearly trends in traffic accidents by category from 2000 to 2020. The chart, shown below, displays three different accident categories: "Alkoholunfälle" (alcohol-related accidents), "Fluchtunfälle" (hit-and-run accidents), and "Verkehrsunfälle" (overall traffic accidents).
 ![newplot (9)](https://github.com/preetammnaik/DPSChallenge/assets/102791651/e93a1c84-0009-4089-9720-c7c954050ef0)
+![newplot (10)](https://github.com/preetammnaik/DPSChallenge/assets/102791651/386c45c6-8596-471d-bf9f-c569c051cecc)
+![newplot (11)](https://github.com/preetammnaik/DPSChallenge/assets/102791651/a2bd61f9-4630-4da3-836b-63e85b040552)
+![newplot (12)](https://github.com/preetammnaik/DPSChallenge/assets/102791651/e9e456c5-e886-47bb-9841-52586ea5dd1a)
+
 
 The chart clearly shows the fluctuations in accident counts over the years, with overall traffic accidents (green line) being the most numerous, followed by hit-and-run incidents (red line), and alcohol-related accidents (blue line) being the least frequent.
 
