@@ -1,14 +1,18 @@
 FROM python:3.10.5
 
+# switch working directory
 WORKDIR /app
 
-ADD . /app
+# copy the requirements file into the image
+COPY ./requirements.txt /app/requirements.txt
 
-RUN pip install --upgrade pip
+# install the dependencies and packages in the requirements file
 RUN pip install -r requirements.txt
 
-EXPOSE 8080
+# copy every content from the local file to the image
+COPY . /app
 
-ENV PORT 8080
+# configure the container to run in an executed manner
+ENV FLASK_APP=main.py
 
-CMD ["gunicorn", "-b", ":8080", "main:app"]
+CMD ["python","-m","flask", "run", "--host=0.0.0.0"]
