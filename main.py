@@ -74,8 +74,7 @@ def predict_accidents_prophet(year, month):
     return int(forecast['yhat'].iloc[0])
 
 
-data = readFileAndFilter('AccidentData.csv')
-model = trainProphetModel(data)
+
 
 
 @app.route('/predict', methods=['GET'])
@@ -101,5 +100,5 @@ def predict():
     return jsonify(response), 200, {'Content-Type': 'application/json'}
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(port=8080)
